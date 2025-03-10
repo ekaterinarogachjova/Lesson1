@@ -1,7 +1,17 @@
 def square(side):
-    return side * side
+    area = side * side
+    return round(area)
 
 
-side_length = 3
-area = square(side_length)
-print(f"Площадь квадрата со стороной {side_length} равна {area}")
+side_str = input("Введите длину стороны квадрата: ")
+
+
+try:
+    side = float(side_str)
+except ValueError:
+    print("Ошибка: Пожалуйста, введите числовое значение для стороны.")
+    exit()
+
+
+area = square(side)
+print("Площадь квадрата:", area)
