@@ -1,20 +1,30 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 driver = webdriver.Chrome()
 
-driver.get("http://uitestingplayground.com/textinput")
+try:
 
+    driver.get("http://uitestingplayground.com/textinput")
 
-input_field = driver.find_element(By.ID, "newButtonName")
-input_field.send_keys("SkyPro")
-time.sleep(3)
+    input_field = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "newButtonName"))
+    )
+    input_field.send_keys("SkyPro")
 
-button = driver.find_element(By.ID, "updatingButton")
-button.click()
+    button = WebDriverWait(driver, 20).until(
+        EC.element_to_be_clickable((By.ID, "updatingButton"))
+    )
+    button.click()
 
-button_text = button.text
-print(button_text)
+    WebDriverWait(driver, 20).until(
+        EC.text_to_be_present_in_element((By.ID, "updatingButton"), "SkyPro")
+    )
+    print(button.text)
 
-driver.quit()
+finally:
+    
+    driver.quit()
